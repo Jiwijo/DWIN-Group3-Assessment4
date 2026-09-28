@@ -41,7 +41,7 @@
       <!-- Left Side of Navbar -->
         <ul class="navbar-nav ralewayextrabold nav-text">
           <li class="nav-item">
-            <a class="nav-link nav-text4" href="recipes.php">RECIPES</a>
+            <a class="nav-link nav-text4" href="recipe_page.php">RECIPES</a>
           </li>
         </ul>
 
