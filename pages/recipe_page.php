@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- local css -->
-      <link rel="stylesheet" href="../styles/styles.css">
-    <!-- end of local csss -->
-
+    
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- local css -->
+      <link rel="stylesheet" href="../styles/recipe_page.css">
+    <!-- end of local csss -->
 
     <title>CookBook</title>
     <link rel="icon" type="image/x-icon" href="../images/cblogo2.png">
@@ -62,13 +63,116 @@
 <!-- This is the start of the first-block -->
 <section class = "first-block">
 
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 id="recipeTitle" class="text-center">RECIPES</h1>
+            <div class="col-12">
+                    <nav class="navbar bg-transparent">
+                        <form class="form-inline w-100">
+                            <input id="searchRecipe" class="form-control w-100" type="search" placeholder="Search Recipes/Categories" aria-label="Search">
+                        </form>
+                    </nav>
+
+                    <div class="d-flex justify-content-center">
+                        <div class="btn-group mx-3">
+                            <button type="button" class="btn recipe-dropdown dropdown-toggle"
+                                    data-toggle="dropdown">
+                                Ingredient
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Chicken</a>
+                                <a class="dropdown-item" href="#">Beef</a>
+                                <a class="dropdown-item" href="#">Pork</a>
+                            </div>
+                        </div>
+
+                        <div class="btn-group mx-3">
+                            <button type="button" class="btn recipe-dropdown dropdown-toggle"
+                                    data-toggle="dropdown">
+                                Cuisine
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Italian</a>
+                                <a class="dropdown-item" href="#">Japanese</a>
+                                <a class="dropdown-item" href="#">Filipino</a>
+                            </div>
+                        </div>
+
+                        <div class="btn-group mx-3">
+                            <button type="button" class="btn recipe-dropdown dropdown-toggle"
+                                    data-toggle="dropdown">
+                                Category
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Breakfast</a>
+                                <a class="dropdown-item" href="#">Lunch</a>
+                                <a class="dropdown-item" href="#">Dinner</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
 </section>
 <!-- This is the end of the first-block -->
 
 <!-- This is the start of the second-block -->
-<section class = "second-block">
-  
+<!-- This is the start of the second-block -->
+<section class="second-block">
+
+    <h1 id="recipeTitle" class="category-title text-center">BROWSE RECIPE CATEGORIES</h1>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 text-center category-card">
+                <a href="#">
+                    <img id="mealImages" src="../images/breakfast_recipe_page.jpg" class="category-img" alt="Breakfast">
+                </a>
+                <h3 id="mealNames">Breakfast</h3>
+            </div>
+
+            <div class="col-md-4 text-center category-card">
+                <a href="#">
+                    <img id="mealImages" src="../images/lunch_recipe_page.jpg" class="category-img" alt="Lunch">
+                </a>
+                <h3 id="mealNames">Lunch</h3>
+            </div>
+
+            <div class="col-md-4 text-center category-card">
+                <a href="#">
+                    <img id="mealImages" src="../images/dinner_recipe_page.jpg" class="category-img" alt="Dinner">
+                </a>
+                <h3 id="mealNames">Dinner</h3>
+            </div>
+
+            <div class="col-md-4 text-center category-card">
+                <a href="#">
+                    <img id="mealImages" src="../images/dessert_recipe_page.jpg" class="category-img" alt="Dessert">
+                </a>
+                <h3 id="mealNames">Dessert</h3>
+            </div>
+
+            <div class="col-md-4 text-center category-card">
+                <a href="#">
+                    <img id="mealImages" src="../images/snack_recipe_page.jpg" class="category-img" alt="Snack">
+                </a>
+                <h3 id="mealNames">Snack</h3>
+            </div>
+
+            <div class="col-md-4 text-center category-card">
+                <a href="#">
+                    <img id="mealImages" src="../images/drinks_recipe_page.jpg" class="category-img" alt="Drinks">
+                </a>
+                <h3 id="mealNames">Drinks</h3>
+            </div>
+
+        </div>
+    </div>
+
 </section>
+<!-- This is the end of the second-block -->
 <!-- This is the end of the second-block -->
 
 <!-- This is the start of the third-block -->

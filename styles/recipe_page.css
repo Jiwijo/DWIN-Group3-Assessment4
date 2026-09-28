@@ -1,0 +1,235 @@
+/* ==== START OF FONT LIST ==== */
+
+@font-face {
+    font-family:'RalewayEB';
+    src: url(../fonts/raleway-extrabold.ttf);
+}
+
+@font-face {
+    font-family: 'RalewayB';
+    src: url(../fonts/raleway-bold.ttf)
+}
+
+@font-face {
+    font-family: 'GochiHand';
+    src: url(../fonts/GochiHand-Regular.ttf);
+}
+
+.ralewayextrabold {
+    font-family: 'RalewayEB';
+  }
+
+.ralewaybold {
+    font-family: 'RalewayB';
+}
+
+.gochihand {
+    font-family: 'GochiHand';
+}
+
+/* ==== END OF FONT LIST ==== */
+
+/* ==== START OF NAVBAR ==== */
+.logo {
+    width: 80px;
+    height: auto;
+    margin-right: 8px;
+}
+
+.navbar {
+    background-color: #f8f6ee;
+    padding: 10px 5%;
+}
+
+.nav-name {
+    color: #654c43 !important;
+    font-size: 30px;
+    margin-right: 40px;
+}
+
+.nav-text1 {
+    color: #f8f6ee !important;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.nav-text2 {
+    color: #654c43 !important;
+    font-size: 20px;
+}
+
+.nav-text3 {
+    color: #f8f6ee !important;
+    font-size: 20px;
+}
+
+.nav-text4 {
+    color: #8f6956 !important;
+    font-size: 20px;
+}
+
+.navbar-brand {
+    margin-right: 40px;
+}
+
+.nav-link {
+    margin-right: 20px;
+}
+
+.navbar-search {
+    width: 400px;
+    height: 55px;
+    border: 3px solid #8f6956;
+    border-radius: 6px;
+    font-family: 'RalewayEB';
+    font-size: 20px;
+    text-align: center;
+}
+
+.navbar-search::placeholder {
+    color: #8f6956;
+    opacity: 1;
+}
+
+
+.login-link {
+    margin-left: 35px;
+    margin-right: 25px;
+    color: #8f6956 !important;
+    font-family: 'RalewayEB';
+    font-size: 20px;
+}
+
+.register-button {
+    background-color: #8f6956;
+    color: #f8f6ee !important;
+    font-family: 'RalewayEB';
+    font-size: 20px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.register-button:hover {
+    color: #f8f6ee !important;
+    text-decoration: none;
+}
+
+/* ==== END OF NAVBAR ==== */
+
+/* ==== BLOCKS ==== */
+
+.first-block {
+    background-color: #f8f6ee;
+    padding: 50px 5%;
+}
+
+.second-block {
+    background-color: #f8f6ee;
+    padding: 50px 5%;
+}
+
+.third-block {
+    background-color: #f8f6ee;
+    padding: 50px 5%;
+}
+
+/* ==== BLOCKS ==== */
+
+/* ==== START OF FOOTER ==== */
+
+.footer {
+    background-color: #8f6956;
+    padding: 50px 5%;
+}
+
+.footer-text1 {
+    color: #f8f6ee !important;
+}
+
+.footer-text2 {
+    color: #f8f6ee !important;
+    font-size: 13px;
+}
+
+.footer-links {
+    color: #e5efe7;
+    text-decoration: none;
+}
+
+.footer-links:hover {
+    color: #e5efe7;
+    text-decoration: underline
+}
+
+/* ==== END OF FOOTER ==== */
+
+/* START OF RECIPE PAGE CSS */
+#searchRecipe {
+    background-color: transparent !important;
+    width: 100%;
+    height: 75px;
+    font-family: 'RalewayEB';
+    font-size: 28px;
+    color: #8f6956;
+    border: 2px solid #8f6956;
+}
+
+#searchRecipe::placeholder {
+    color: #8f6956;
+    opacity: 1;
+}
+
+#searchRecipe:focus {
+    border-color: #8f6956;
+    box-shadow: 0 0 0 0.2rem rgba(143, 105, 86, 0.25);
+    outline: none;
+}
+
+#recipeTitle {
+    font-family: 'RalewayEB';
+    font-size: 60px;
+    color: #8f6956;
+}
+
+.first-block {
+    border-top: 20px solid #8f6956;
+    border-bottom: 20px solid #8f6956;
+    padding-top: 150px;
+    padding-bottom: 150px;
+}
+
+.recipe-dropdown {
+    background-color: transparent !important;
+    color: #8f6956 !important;
+    border: 2px solid #8f6956 !important;
+    border-radius: 6px !important;
+    width: 285px;
+    height: 75px;
+    font-family: 'RalewayB';
+    font-size: 20px;
+}
+
+.recipe-dropdown:hover,
+.recipe-dropdown:focus,
+.recipe-dropdown:active {
+    background-color: transparent !important;
+    color: #8f6956 !important;
+    border: 2px solid #8f6956 !important;
+    box-shadow: none !important;
+}
+
+#mealImages {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+#mealNames {
+    font-family: 'RalewayEB';
+    color: #6b5147;
+    font-size: 28px;
+    margin-top: 10px;
+}
+/* END OF RECIPE PAGE CSS */
