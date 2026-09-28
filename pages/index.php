@@ -30,7 +30,7 @@
   </a>
 
   <!-- Button -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -39,10 +39,7 @@
       <!-- Left Side of Navbar -->
         <ul class="navbar-nav ralewayextrabold nav-text">
           <li class="nav-item">
-            <a class="nav-link nav-text4" href="#">RECIPES</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-text4" href="#">COLLECTIONS</a>
+            <a class="nav-link nav-text4" href="recipes.php">RECIPES</a>
           </li>
         </ul>
 
@@ -125,10 +122,10 @@
           <a href="index.php" class="footer-links ralewaybold">Home</a>
         </p>
         <p>
-          <a href="#" class="footer-links ralewaybold">Recipes</a>
+          <a href="recipes.php" class="footer-links ralewaybold">Recipes</a>
         </p>
         <p>
-          <a href="#" class="footer-links ralewaybold">Favourites</a>
+          <a href="mycollections.php" class="footer-links ralewaybold">Collections</a>
         </p>
       </div>
       <!-- Grid column -->
