@@ -1,16 +1,12 @@
 <?php
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/recipe_media.php';
+cookbook_require_login();
+$currentUser = cookbook_current_user();
+cookbook_db();
+
 // ---------- Database connection (matches cookbook db used by the team) ----------
-$host = 'localhost'; $user = 'root'; $pass = ''; $db = 'cookbook'; $charset = 'utf8mb4';
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$pdo = null;
-try {
-    $pdo = new PDO($dsn, $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-} catch (PDOException $e) {
-    die('Database connection failed.');
-}
+$pdo = cookbook_db();
 
 // ---------- Load categories for the dropdown ----------
 $categories = $pdo->query('SELECT category_id, category_name FROM categories ORDER BY category_id')->fetchAll();
@@ -26,12 +22,17 @@ function minutesFrom($text) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (!cookbook_csrf_is_valid()) {
+    $errors[] = 'Your session expired. Please reload the page and try again.';
+  }
+
     $title = trim($_POST['title'] ?? '');
     $categoryId = (int)($_POST['category'] ?? 0);
     $parts = $_POST['parts'] ?? [];
 
     // photo validation (server-side, don't trust the browser)
     $ext = null;
+    $mime = '';
     if (!isset($_FILES['photo']) || $_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
         $errors[] = 'Choose a photo and upload it (Step 5).';
     } else {
@@ -44,6 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($title === '') $errors[] = 'Enter a recipe title.';
     if ($categoryId <= 0) $errors[] = 'Choose a category.';
+
+    try {
+      $additionalMedia = cookbook_validate_recipe_media($_FILES['media'] ?? null);
+    } catch (RuntimeException $exception) {
+      $additionalMedia = [];
+      $errors[] = $exception->getMessage();
+    }
 
     $ingredientsText = '';
     $instructionsText = '';
@@ -92,17 +100,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $stmt = $pdo->prepare(
                 'INSERT INTO recipes (title, prep_time_minutes, cook_time_minutes, servings,
-                 calories_per_serving, protein_g, carbs_g, fat_g, ingredients, instructions, photo)
-                 VALUES (?,?,?,?,?,?,?,?,?,?,?)'
+               calories_per_serving, protein_g, carbs_g, fat_g, ingredients, instructions, photo, owner_id)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'
             );
             $stmt->execute([
                 $title, $prepMin, $cookMin, $servings,
                 $calories, $protein, $carbs, $fat,
-                trim($ingredientsText), trim($instructionsText), $photoName,
+              trim($ingredientsText), trim($instructionsText), $photoName, $currentUser['id'],
             ]);
             $recipeId = $pdo->lastInsertId();
             $pdo->prepare('INSERT INTO recipe_categories (recipe_id, category_id) VALUES (?, ?)')
                 ->execute([$recipeId, $categoryId]);
+            $pdo->prepare(
+                'INSERT INTO recipe_media (recipe_id, media_path, media_type, mime_type) VALUES (?, ?, ?, ?)'
+            )->execute([$recipeId, 'recipes/' . $photoName, 'image', $mime]);
+            cookbook_store_recipe_media($pdo, (int) $recipeId, $additionalMedia);
             $pdo->commit();
 
             // redirect to avoid resubmission on refresh
@@ -119,14 +131,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_GET['saved'])) $saved = true;
 
 // ---------- Recent recipes to show in "My Recipes" ----------
-$recentRecipes = $pdo->query(
-    'SELECT r.recipe_id, r.title, r.prep_time_minutes, r.cook_time_minutes, r.servings, r.photo,
-            c.category_name
-     FROM recipes r
-     LEFT JOIN recipe_categories rc ON rc.recipe_id = r.recipe_id
-     LEFT JOIN categories c ON c.category_id = rc.category_id
-     ORDER BY r.recipe_id DESC LIMIT 10'
-)->fetchAll();
+$recentQuery = 'SELECT r.recipe_id, r.title, r.prep_time_minutes, r.cook_time_minutes, r.servings, r.photo,
+             c.category_name
+        FROM recipes r
+        LEFT JOIN recipe_categories rc ON rc.recipe_id = r.recipe_id
+        LEFT JOIN categories c ON c.category_id = rc.category_id';
+$recentParameters = [];
+if ($currentUser['role'] !== 'admin') {
+  $recentQuery .= ' WHERE r.owner_id = :owner_id';
+  $recentParameters['owner_id'] = $currentUser['id'];
+}
+$recentQuery .= ' ORDER BY r.recipe_id DESC LIMIT 10';
+$recentStatement = $pdo->prepare($recentQuery);
+$recentStatement->execute($recentParameters);
+$recentRecipes = $recentStatement->fetchAll();
 
 function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
 ?>
@@ -160,8 +178,16 @@ function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
       <form class="form-inline">
         <input class="form-control navbar-search" type="search" placeholder="SEARCH">
       </form>
-      <a class="nav-link nav-text4 login-link" href="#">LOGIN</a>
-      <a class="register-button" href="#">REGISTER</a>
+      <?php if (cookbook_current_user()): ?>
+        <a class="nav-link nav-text4 login-link" href="myaccount.php">ACCOUNT</a>
+        <form class="form-inline" method="post" action="logout.php">
+          <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(cookbook_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
+          <button class="register-button" type="submit">LOG OUT</button>
+        </form>
+      <?php else: ?>
+        <a class="nav-link nav-text4 login-link" href="login.php">LOGIN</a>
+        <a class="register-button" href="register.php">REGISTER</a>
+      <?php endif; ?>
     </div>
   </div>
 </nav>
@@ -184,6 +210,7 @@ function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
   <?php endif; ?>
 
   <form id="recipe-form" method="post" enctype="multipart/form-data" novalidate>
+    <input type="hidden" name="csrf_token" value="<?= h(cookbook_csrf_token()) ?>">
     <div class="row">
 
       <!-- Step 1 -->
@@ -376,7 +403,7 @@ function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
 
     <!-- Step 5 -->
     <section class="recipe-panel mb-4">
-      <h2 class="recipe-panel-head ralewaybold">Step 5: Recipe Photo</h2>
+      <h2 class="recipe-panel-head ralewaybold">Step 5: Recipe Photos and Videos</h2>
       <div class="recipe-panel-body">
         <p class="mb-2">Add your own image to your recipe.*</p>
         <p>Images should be JPG/JPEG/PNG format and be between 2MB - 4MB to achieve quality results in your printed PDF cookbook.</p>
@@ -390,6 +417,11 @@ function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
           <button type="button" class="btn btn-recipe btn-block mt-3" id="upload-btn" disabled>Upload</button>
           <p class="recipe-hint mt-3 mb-0" id="photo-msg" role="status">Images cannot exceed 4MB.</p>
           <img id="photo-preview" class="recipe-photo-preview" alt="Preview of your recipe photo" hidden>
+        </div>
+        <div class="form-group mt-4">
+          <label for="media">Add up to 10 more photos or videos</label>
+          <input id="media" name="media[]" type="file" class="form-control-file" multiple accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime">
+          <small class="form-text text-muted">JPG, PNG, WebP, MP4, WebM, or MOV; up to 20MB per file.</small>
         </div>
       </div>
     </section>

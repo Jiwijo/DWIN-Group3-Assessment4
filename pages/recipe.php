@@ -1,23 +1,7 @@
 <?php
-// 1. Database Connection Configuration
-$host    = 'localhost';
-$user    = 'root';     // Replace with your DB username
-$pass    = '';         // Replace with your DB password
-$db      = 'cookbook'; // Replace with your DB name
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-}
+require_once __DIR__ . '/../includes/auth.php';
+$pdo = cookbook_db();
+$currentUser = cookbook_current_user();
 
 // 2. Get and Validate Recipe ID from URL
 $recipeId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -30,6 +14,8 @@ if ($recipeId <= 0) {
 $stmt = $pdo->prepare('
     SELECT 
         r.recipe_id AS id,
+        r.owner_id,
+        r.photo,
         r.title,
         r.prep_time_minutes,
         r.cook_time_minutes,
@@ -45,14 +31,39 @@ if (!$recipe) {
     die("Recipe not found.");
 }
 
+$mediaStatement = $pdo->prepare('SELECT media_path, media_type, mime_type FROM recipe_media WHERE recipe_id = ? ORDER BY media_id');
+$mediaStatement->execute([$recipeId]);
+$mediaItems = $mediaStatement->fetchAll();
+
 // 4. Load the matching recipe image, with a placeholder fallback
 $imageSrc = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 300 150"><rect width="100%" height="100%" fill="%23e9ecef"/><text x="50%" y="50%" fill="%236c757d" dominant-baseline="middle" text-anchor="middle">No Image Available</text></svg>';
-$imageFiles = glob(__DIR__ . '/../images/Recipe images/*') ?: [];
-foreach ($imageFiles as $imageFile) {
-    if (strtolower(pathinfo($imageFile, PATHINFO_FILENAME)) === strtolower($recipe['title'])) {
-        $imageSrc = '../images/Recipe%20images/' . rawurlencode(basename($imageFile));
-        break;
+$canManageRecipe = $currentUser && (
+    $currentUser['role'] === 'admin' || (int) $recipe['owner_id'] === (int) $currentUser['id']
+);
+
+if (!$mediaItems && $recipe['photo'] && is_file(__DIR__ . '/../images/recipes/' . basename($recipe['photo']))) {
+    $mediaItems[] = [
+        'media_path' => 'recipes/' . basename($recipe['photo']),
+        'media_type' => 'image',
+        'mime_type' => 'image/jpeg',
+    ];
+}
+if (!$mediaItems) {
+    foreach (glob(__DIR__ . '/../images/Recipe images/*') ?: [] as $imageFile) {
+        if (strtolower(pathinfo($imageFile, PATHINFO_FILENAME)) === strtolower($recipe['title'])) {
+            $mediaItems[] = [
+                'media_path' => 'Recipe images/' . basename($imageFile),
+                'media_type' => 'image',
+                'mime_type' => mime_content_type($imageFile) ?: 'image/jpeg',
+            ];
+            break;
+        }
     }
+}
+
+function recipe_media_url(string $path): string
+{
+    return '../images/' . implode('/', array_map('rawurlencode', explode('/', ltrim($path, '/\\'))));
 }
 ?>
 
@@ -83,9 +94,31 @@ foreach ($imageFiles as $imageFile) {
     <a href="recipe_page.php" class="btn btn-outline-secondary mb-4">&larr; Back to Recipes</a>
     
     <div class="card">
-        <img src="<?php echo htmlspecialchars($imageSrc, ENT_QUOTES, 'UTF-8'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8'); ?>" style="max-height: 400px; object-fit: cover;">
+                <?php if ($mediaItems): ?>
+                    <div class="row no-gutters">
+                        <?php foreach ($mediaItems as $media): ?>
+                            <div class="col-md-6 p-2">
+                                <?php if ($media['media_type'] === 'video'): ?>
+                                    <video controls class="w-100" style="max-height: 400px;"><source src="<?php echo htmlspecialchars(recipe_media_url($media['media_path']), ENT_QUOTES, 'UTF-8'); ?>" type="<?php echo htmlspecialchars($media['mime_type'], ENT_QUOTES, 'UTF-8'); ?>"></video>
+                                <?php else: ?>
+                                    <img src="<?php echo htmlspecialchars(recipe_media_url($media['media_path']), ENT_QUOTES, 'UTF-8'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8'); ?>" style="max-height: 400px; object-fit: cover;">
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <img src="<?php echo htmlspecialchars($imageSrc, ENT_QUOTES, 'UTF-8'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8'); ?>" style="max-height: 400px; object-fit: cover;">
+                <?php endif; ?>
         <div class="card-body">
             <h1 class="card-title"><?php echo htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8'); ?></h1>
+                        <?php if ($canManageRecipe): ?>
+                            <a href="edit-recipe.php?id=<?php echo (int) $recipeId; ?>" class="btn btn-outline-primary mb-3">Edit recipe</a>
+                            <form method="post" action="delete-recipe.php" class="d-inline" onsubmit="return confirm('Delete this recipe and its uploaded media?');">
+                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(cookbook_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
+                                <input type="hidden" name="recipe_id" value="<?php echo (int) $recipeId; ?>">
+                                <button type="submit" class="btn btn-outline-danger mb-3">Delete recipe</button>
+                            </form>
+                        <?php endif; ?>
             <p class="text-muted">
                 Prep Time: <?php echo (int)($recipe['prep_time_minutes'] ?? 0); ?> mins | 
                 Cook Time: <?php echo (int)($recipe['cook_time_minutes'] ?? 0); ?> mins | 
