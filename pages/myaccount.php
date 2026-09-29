@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif (($_POST['action'] ?? '') === 'update_profile') {
     $username = trim($_POST['username'] ?? '');
     $email = strtolower(trim($_POST['email'] ?? ''));
+    $fullName = trim($_POST['full_name'] ?? '');
+    $location = trim($_POST['location'] ?? '');
     $profilePhoto = $accountDetails['profile_photo'];
     $newPhotoPath = null;
 
