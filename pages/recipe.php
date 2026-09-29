@@ -73,14 +73,14 @@ foreach ($imageFiles as $imageFile) {
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item"><a class="nav-link" href="index.php">RECIPES</a></li>
-      <li class="nav-item"><a class="nav-link" href="my-collections.php">COLLECTIONS</a></li>
+    <li class="nav-item"><a class="nav-link" href="collections.php">COLLECTIONS</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- Recipe Content -->
 <main class="container my-5">
-    <a href="my-collections.php" class="btn btn-outline-secondary mb-4">&larr; Back to Collections</a>
+    <a href="collections.php" class="btn btn-outline-secondary mb-4">&larr; Back to Collections</a>
     
     <div class="card">
         <img src="<?php echo htmlspecialchars($imageSrc, ENT_QUOTES, 'UTF-8'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8'); ?>" style="max-height: 400px; object-fit: cover;">
