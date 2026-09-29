@@ -201,6 +201,8 @@ $accountRecipes = $recipeStatement->fetchAll();
       <input type="hidden" name="action" value="update_profile">
       <div class="form-group"><label for="username">Username</label><input id="username" name="username" class="form-control" maxlength="80" required value="<?php echo htmlspecialchars($_POST['username'] ?? $accountDetails['username'], ENT_QUOTES, 'UTF-8'); ?>"></div>
       <div class="form-group"><label for="email">Email</label><input id="email" name="email" type="email" class="form-control" required value="<?php echo htmlspecialchars($_POST['email'] ?? $accountDetails['email'], ENT_QUOTES, 'UTF-8'); ?>"></div>
+      <div class="form-group"><label for="full_name">Name</label><input id="full_name" name="full_name" class="form-control" maxlength="120" value="<?php echo htmlspecialchars($_POST['full_name'] ?? ($accountDetails['full_name'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>"></div>
+      <div class="form-group"><label for="location">Location</label><input id="location" name="location" class="form-control" maxlength="120" placeholder="e.g. Sydney, Australia" value="<?php echo htmlspecialchars($_POST['location'] ?? ($accountDetails['location'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>"></div>
       <div class="form-group"><label for="profile_photo">Profile photo</label><input id="profile_photo" name="profile_photo" type="file" class="form-control-file" accept="image/jpeg,image/png,image/webp"><small class="form-text text-muted">JPG, PNG, or WebP; maximum 4MB.</small></div>
       <button type="submit" class="btn btn-primary">Save profile</button>
     </form>
