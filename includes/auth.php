@@ -30,6 +30,8 @@ function cookbook_db(): PDO
             email VARCHAR(254) NOT NULL UNIQUE,
             password_hash VARCHAR(255) NOT NULL,
             role ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+            full_name VARCHAR(120) NULL,
+            location VARCHAR(120) NULL,
             profile_photo VARCHAR(255) NULL,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
