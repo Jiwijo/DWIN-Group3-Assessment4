@@ -206,6 +206,13 @@ $accountRecipes = $recipeStatement->fetchAll();
       <div class="form-group"><label for="profile_photo">Profile photo</label><input id="profile_photo" name="profile_photo" type="file" class="form-control-file" accept="image/jpeg,image/png,image/webp"><small class="form-text text-muted">JPG, PNG, or WebP; maximum 4MB.</small></div>
       <button type="submit" class="btn btn-primary">Save profile</button>
     </form>
+    <?php if ($profilePhotoUrl): ?>
+      <form method="post" action="myaccount.php" class="mb-4" onsubmit="return confirm('Delete your profile picture?');">
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(cookbook_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
+        <input type="hidden" name="action" value="delete_profile_photo">
+        <button type="submit" class="btn btn-outline-danger">Delete profile picture</button>
+      </form>
+    <?php endif; ?>
     <h2>Change password</h2>
     <form method="post" action="myaccount.php">
       <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(cookbook_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
