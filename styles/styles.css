@@ -220,3 +220,142 @@ section.first-block .custom-jumbotron .custom-btn:hover {
 
 /* ==== END OF INDEX BODY ==== */
 
+/* ==== ACCOUNT AND AUTHENTICATION PAGES ==== */
+.auth-panel {
+    background-color: #eaddd3;
+    border-radius: 15px;
+    color: #654c43;
+    font-family: 'RalewayB', sans-serif;
+    padding: 2.5rem;
+}
+
+.auth-page-title,
+.account-page h1,
+.account-page h2 {
+    color: #654c43;
+    font-family: 'RalewayEB', sans-serif;
+}
+
+.account-page {
+    color: #654c43;
+    font-family: 'RalewayB', sans-serif;
+}
+
+.auth-panel label,
+.account-page label {
+    color: #654c43;
+    font-family: 'RalewayB', sans-serif;
+}
+
+.auth-panel .form-control,
+.account-page .form-control {
+    border: 2px solid #8f6956;
+    border-radius: 6px;
+}
+
+.auth-panel .form-control:focus,
+.account-page .form-control:focus {
+    border-color: #654c43;
+    box-shadow: 0 0 0 0.2rem rgba(143, 105, 86, 0.2);
+}
+
+.cookbook-button,
+.account-page .btn-primary {
+    background-color: #8f6956;
+    border-color: #8f6956;
+    color: #f8f6ee;
+    font-family: 'RalewayEB', sans-serif;
+}
+
+.cookbook-button:hover,
+.account-page .btn-primary:hover {
+    background-color: #654c43;
+    border-color: #654c43;
+    color: #f8f6ee;
+}
+
+.cookbook-link {
+    color: #8f6956;
+    font-family: 'RalewayB', sans-serif;
+}
+
+.cookbook-link:hover {
+    color: #654c43;
+}
+
+.account-page .nav-pills .nav-link {
+    border-radius: 6px;
+    color: #654c43;
+    font-family: 'RalewayB', sans-serif;
+    margin-bottom: 4px;
+}
+
+.account-page .nav-pills .nav-link.active {
+    background-color: #8f6956;
+    color: #f8f6ee;
+}
+
+.account-page .tab-content {
+    background-color: #eaddd3 !important;
+    border: 0 !important;
+    border-radius: 15px !important;
+    box-shadow: 0 8px 20px rgba(101, 76, 67, 0.08);
+}
+
+.account-page .btn-outline-secondary {
+    border-color: #8f6956;
+    color: #654c43;
+}
+
+.account-page .btn-outline-secondary:hover {
+    background-color: #8f6956;
+    color: #f8f6ee;
+}
+
+.account-page .btn-outline-primary {
+    border-color: #8f6956;
+    color: #8f6956;
+}
+
+.account-page .btn-outline-primary:hover {
+    background-color: #8f6956;
+    color: #f8f6ee;
+}
+
+.account-page .profile-photo {
+    border: 3px solid #eaddd3;
+}
+
+.account-profile-summary {
+    align-items: center;
+    display: flex;
+    gap: 1.25rem;
+}
+
+.account-avatar {
+    border: 3px solid #f8f6ee;
+    border-radius: 50%;
+    flex: 0 0 112px;
+    height: 112px;
+    object-fit: cover;
+    width: 112px;
+}
+
+.account-avatar-placeholder {
+    align-items: center;
+    background-color: #8f6956;
+    color: #f8f6ee;
+    display: flex;
+    font-family: 'RalewayEB', sans-serif;
+    font-size: 40px;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    .account-profile-summary {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+/* ==== END ACCOUNT AND AUTHENTICATION PAGES ==== */
+
