@@ -4,6 +4,7 @@ function cookbook_validate_recipe_media(?array $upload): array
     if (!$upload || !isset($upload['name']) || !is_array($upload['name'])) {
         return [];
     }
+    
 
     $files = [];
     foreach ($upload['name'] as $index => $name) {
