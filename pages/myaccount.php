@@ -82,6 +82,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
       }
     }
+     } elseif (($_POST['action'] ?? '') === 'delete_profile_photo') {
+    if (!empty($accountDetails['profile_photo']) && str_starts_with($accountDetails['profile_photo'], 'profiles/')) {
+      $photoFile = __DIR__ . '/../images/' . $accountDetails['profile_photo'];
+      if (is_file($photoFile)) {
+        @unlink($photoFile);
+      }
+    }
+    $update = $pdo->prepare('UPDATE users SET profile_photo = NULL WHERE user_id = ?');
+    $update->execute([$accountUser['id']]);
+    header('Location: myaccount.php?tab=profile&status=photo-deleted');
+    exit;
   } elseif (($_POST['action'] ?? '') === 'change_password') {
     $newPassword = $_POST['new_password'] ?? '';
     if (!password_verify($_POST['current_password'] ?? '', $accountDetails['password_hash'])) {
