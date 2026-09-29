@@ -147,3 +147,49 @@ textarea.form-control { height: auto; }
   .btn-recipe, .btn-outline-recipe { transition: background-color .15s, color .15s; }
 }
 
+/* ==== COSMETIC FIXES ==== */
+
+/* My Recipes: left-align photo + text instead of pushing text to the right */
+.recipe-item {
+  justify-content: flex-start;
+}
+.recipe-item > div {
+  flex: 1;
+}
+
+/* Nutrition inputs (Step 4): force every input + unit pairing to line up evenly */
+.recipe-panel .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -0.5rem;
+  margin-left: -0.5rem;
+}
+.recipe-panel .form-row > .form-group {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  box-sizing: border-box;
+}
+.recipe-panel .input-group,
+.recipe-panel .input-group > .form-control {
+  width: 100%;
+  box-sizing: border-box;
+}
+/* ==== END OF COSMETIC FIXES ==== */
+
+
+/* ==== SUCCESS MESSAGE IF USER INPUTS CORRECTLY ==== */
+.recipe-summary-success {
+  background: #e6f4ea;
+  border: 2px solid #2d7a3e;
+  color: #1e5c2b;
+  border-radius: 6px;
+  padding: .8rem 1rem;
+  margin-bottom: 1.2rem;
+  font-size: 13px;
+}
+/* ==== END OF SUCCESS MESSAGE IF USER INPUTS CORRECTLY ==== */
+
+.recipe-item-thumb {
+  width: 64px; height: 64px; object-fit: cover;
+  border-radius: 6px; flex: none; margin-right: .75rem;
+}
