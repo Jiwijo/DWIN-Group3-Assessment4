@@ -73,20 +73,41 @@ function recipe_media_url(string $path): string
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title><?php echo htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8'); ?> — CookBook</title>
+    <link rel="icon" type="image/x-icon" href="../images/cblogo2.png">
 </head>
 <body>
 
 <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-  <a class="navbar-brand nav-name" href="index.php">CookBook</a>
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-    <li class="nav-item"><a class="nav-link" href="recipe_page.php">RECIPES</a></li>
-    <li class="nav-item"><a class="nav-link" href="collections.php">COLLECTIONS</a></li>
-    </ul>
-  </div>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="gochihand nav-name" href="index.php">
+        <img class="logo" src="../images/cblogo1.png" alt="CookBook Logo" title="CookBook logo">
+        CookBook
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ralewayextrabold nav-text">
+            <li class="nav-item"><a class="nav-link nav-text4" href="recipe_page.php">RECIPES</a></li>
+        </ul>
+        <div class="ml-auto d-flex align-items-center">
+            <form class="form-inline" action="recipe_page.php" method="get">
+                <input class="form-control navbar-search" type="search" name="search" placeholder="SEARCH" aria-label="Search recipes">
+            </form>
+            <?php if ($currentUser): ?>
+                <a class="nav-link nav-text4 login-link" href="myaccount.php">ACCOUNT</a>
+                <form class="form-inline" method="post" action="logout.php">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(cookbook_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
+                    <button class="register-button" type="submit">LOG OUT</button>
+                </form>
+            <?php else: ?>
+                <a class="nav-link nav-text4 login-link" href="login.php">LOGIN</a>
+                <a class="register-button" href="register.php">REGISTER</a>
+            <?php endif; ?>
+        </div>
+    </div>
 </nav>
 
 <!-- Recipe Content -->
@@ -130,6 +151,50 @@ function recipe_media_url(string $path): string
         </div>
     </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<footer class="text-center text-lg-start bg-body-tertiary text-muted footer">
+    <section>
+        <div class="container text-center mt-5">
+            <div class="row mt-3">
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <h6 class="fw-bold mb-4">
+                        <a class="gochihand footer-text1" href="index.php"><img class="logo" src="../images/cblogo2.png" alt="CookBook Logo" title="CookBook logo">CookBook</a>
+                    </h6>
+                    <p class="footer-text2 ralewaybold">Improve the cooking experience.</p>
+                    <hr>
+                    <p>
+                        <a href="#" class="footer-links ralewaybold footer-text2">Instagram</a>
+                        <a href="#" class="footer-links ralewaybold footer-text2">Facebook</a>
+                        <a href="#" class="footer-links ralewaybold footer-text2">Tiktok</a>
+                        <a href="#" class="footer-links ralewaybold footer-text2">YouTube</a>
+                    </p>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase ralewayextrabold footer-text1 mb-4">Quick links</h6>
+                    <p><a href="index.php" class="footer-links ralewaybold">Home</a></p>
+                    <p><a href="recipe_page.php" class="footer-links ralewaybold">Recipes</a></p>
+                    <p><a href="collections.php" class="footer-links ralewaybold">Collections</a></p>
+                </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <h6 class="text-uppercase ralewayextrabold footer-text1 mb-4">GROUP INFORMATION</h6>
+                    <p><span class="footer-text2 ralewaybold">Joewiey Franzine Ibanez - K231663</span></p>
+                    <p><span class="footer-text2 ralewaybold">Sheirina Glee Nadera - K240664</span></p>
+                    <p><span class="footer-text2 ralewaybold">Regil Maharjan - K240722</span></p>
+                    <p><span class="footer-text2 ralewaybold">Chauncey Ariel Nieto - K240938</span></p>
+                    <p><span class="footer-text2 ralewaybold">Cassandra Noeribelle Dejucos - K240945</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="text-center p-4">
+        <p class="ralewaybold footer-text2">This website was created for the final assessment for DWIN309 at Kent Institute Australia - Trimester 2, 2026</p>
+        <p class="ralewaybold footer-text2">&copy; CookBook 2026. All rights reserved.</p>
+    </div>
+</footer>
 
 </body>
 </html>
