@@ -189,6 +189,9 @@ $accountRecipes = $recipeStatement->fetchAll();
     <?php elseif (($_GET['status'] ?? '') === 'password-updated'): ?>
       <div class="alert alert-success" role="status">Password changed.</div>
     <?php endif; ?>
+    <?php elseif (($_GET['status'] ?? '') === 'photo-deleted'): ?>
+      <div class="alert alert-success" role="status">Profile picture deleted.</div>
+    <?php endif; ?>
     <?php if ($profilePhotoUrl): ?>
       <img class="profile-photo" src="<?php echo htmlspecialchars($profilePhotoUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="Profile photo" width="120" height="120" style="object-fit: cover; border-radius: 50%;">
     <?php endif; ?>
