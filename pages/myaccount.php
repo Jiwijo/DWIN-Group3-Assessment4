@@ -222,6 +222,7 @@ $accountRecipes = $recipeStatement->fetchAll();
       <div class="form-group"><label for="confirm_password">Confirm new password</label><input id="confirm_password" name="confirm_password" type="password" class="form-control" minlength="8" autocomplete="new-password" required></div>
       <button type="submit" class="btn btn-primary">Change password</button>
     </form>
+    <p class="mt-3"><a class="cookbook-link" href="forgot_password.php">Forgot your password?</a></p>
   </div>
   <div class="tab-pane fade <?php echo $activeTab === 'recipes' ? 'show active' : ''; ?>" id="v-pills-recipes" role="tabpanel" aria-labelledby="v-pills-recipes-tab">
     <div class="d-flex justify-content-between align-items-center mb-3">
