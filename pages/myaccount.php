@@ -3,7 +3,7 @@ require_once __DIR__ . '/../includes/auth.php';
 cookbook_require_login();
 $pdo = cookbook_db();
 $accountUser = cookbook_current_user();
-$accountStatement = $pdo->prepare('SELECT username, email, profile_photo, password_hash FROM users WHERE user_id = ?');
+$accountStatement = $pdo->prepare('SELECT username, email, full_name, location, profile_photo, password_hash FROM users WHERE user_id = ?');
 $accountStatement->execute([$accountUser['id']]);
 $accountDetails = $accountStatement->fetch();
 $profilePhotoUrl = null;
