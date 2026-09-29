@@ -159,7 +159,64 @@
 
 .footer-links:hover {
     color: #e5efe7;
-    text-decoration: underline
+    text-decoration: underline;
 }
 
 /* ==== END OF FOOTER ==== */
+
+/* ==== START OF INDEX BODY ==== */
+
+/* 1. Change the jumbotron background from gray to beige */
+section.first-block .jumbotron.custom-jumbotron {
+    background-color: #eaddd3 !important; 
+    padding: 3rem 2rem !important;        
+    border-radius: 15px !important;       
+}
+
+/* 2. Style your text column spacing */
+section.first-block .custom-jumbotron .text-side {
+    padding-left: 3rem !important;
+}
+
+/* 3. Style the title text to brown and apply font */
+section.first-block .custom-jumbotron .homepage-title {
+    color: #654c43 !important;            
+    font-family: 'RalewayEB', sans-serif !important;
+    font-size: 3.2rem !important;         
+    font-weight: 800 !important;
+    line-height: 1.15;
+}
+
+/* 4. Make the horizontal line matching brown */
+section.first-block .custom-jumbotron .title-divider {
+    border-top: 2px solid #654c43 !important;
+    opacity: 1 !important;
+    margin: 20px 0 !important;
+}
+
+/* 5. Style the subtitle description text to brown */
+section.first-block .custom-jumbotron .subtitle-text {
+    color: #654c43 !important;
+    font-size: 1.1rem !important;
+}
+
+/* 6. Fix the button to have a brown border and brown text */
+section.first-block .custom-jumbotron .custom-btn {
+    color: #654c43 !important;
+    background-color: transparent !important;
+    border: 2px solid #654c43 !important;
+    border-radius: 30px !important;       
+    padding: 10px 35px !important;
+    font-weight: 600 !important;
+    display: inline-block;
+}
+
+/* 7. Button Hover Style */
+section.first-block .custom-jumbotron .custom-btn:hover {
+    color: #eaddd3 !important;
+    background-color: #654c43 !important;
+    text-decoration: none !important;
+}
+
+/* ==== END OF INDEX BODY ==== */
+

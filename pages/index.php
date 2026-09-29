@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- local css -->
-      <link rel="stylesheet" href="../styles/styles.css">
-    <!-- end of local csss -->
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- local css -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    <!-- end of local csss -->
 
     <title>CookBook</title>
     <link rel="icon" type="image/x-icon" href="../images/cblogo2.png">
@@ -59,9 +59,34 @@
 <!-- THIS IS THE END OF THE NAV BAR (MENU SECTION) -->
 
 <!-- This is the start of the first-block -->
-<section class = "first-block">
+<section class="first-block">
+  <!-- Added standard Bootstrap 4 margin-bottom (mb-4) and a custom modifier class -->
+  <div class="jumbotron custom-jumbotron mb-4">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        
+        <!-- Left Side: Image Column (Renders first) -->
+        <div class="col-md-6 text-center">
+          <img src="../images/homepagefood.jpg" class="img-fluid rounded" alt="Cooking experience">
+        </div>
 
+        <!-- Right Side: Your Content Column -->
+        <div class="col-md-6 text-side">
+          <h1 class="homepage-title">Improve Your Cooking Experience.</h1>
+          <hr class="title-divider">
+          <p class="subtitle-text">Different recipes available from different individuals around the world!</p>
+          <p class="lead mb-0">
+            <!-- Swapped btn-primary for a custom outline class -->
+            <a class="btn custom-btn btn-lg" href="recipe.php" role="button">View Recipes</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </section>
+
+
 <!-- This is the end of the first-block -->
 
 <!-- This is the start of the second-block -->
