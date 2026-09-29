@@ -35,6 +35,8 @@ function cookbook_db(): PDO
             profile_photo VARCHAR(255) NULL,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+        $pdo->exec('ALTER TABLE users ADD COLUMN IF NOT EXISTS full_name VARCHAR(120) NULL');
+        $pdo->exec('ALTER TABLE users ADD COLUMN IF NOT EXISTS location VARCHAR(120) NULL');
         $pdo->exec('ALTER TABLE users ADD COLUMN IF NOT EXISTS profile_photo VARCHAR(255) NULL');
         $pdo->exec('ALTER TABLE recipes ADD COLUMN IF NOT EXISTS owner_id INT UNSIGNED NULL');
         $pdo->exec('ALTER TABLE recipes ADD COLUMN IF NOT EXISTS photo VARCHAR(255) NULL');
