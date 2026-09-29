@@ -1,4 +1,4 @@
-/* styles for create-recipe.html only.
+/* styles for create-recipe.php only.
    colours come from styles.css: cream #f8f6ee, brown #8f6956 / #654c43, sage #e5efe7. */
 :root {
   --recipe-accent: #8f6956;
@@ -87,8 +87,16 @@ textarea.form-control { height: auto; }
 /* nutrition input groups (Step 4) */
 .recipe-panel .input-group {
   flex-wrap: nowrap;
+  align-items: stretch;   /* input and unit box always share the same height */
+  width: 100%;
+  box-sizing: border-box;
 }
 .recipe-panel .input-group > .form-control {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 1%;
+  height: auto;
+  box-sizing: border-box;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   position: relative;
@@ -98,9 +106,13 @@ textarea.form-control { height: auto; }
   z-index: 2;
 }
 .recipe-panel .input-group-append {
+  display: flex;
   margin-left: -2px;
 }
 .recipe-panel .input-group-append .input-group-text {
+  width: 3.5rem;          /* same width for cal, g, mg... so every input ends at the same spot */
+  justify-content: center;
+  padding: 0;
   font-family: 'RalewayB', Arial, sans-serif;
   font-size: 13px;
   background: var(--recipe-cream);
@@ -111,23 +123,6 @@ textarea.form-control { height: auto; }
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
-
-/* match input and unit label heights exactly (Step 4) */
-.recipe-panel .input-group {
-  align-items: stretch;
-}
-.recipe-panel .input-group > .form-control,
-.recipe-panel .input-group-append,
-.recipe-panel .input-group-append .input-group-text {
-  height: calc(1.5em + .5rem + 2px);
-  display: flex;
-  align-items: center;
-}
-.recipe-panel .input-group-append .input-group-text {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 
 /* photo */
 .recipe-photo { text-align: center; max-width: 420px; margin: 0 auto; }
@@ -157,7 +152,7 @@ textarea.form-control { height: auto; }
   flex: 1;
 }
 
-/* Nutrition inputs (Step 4): force every input + unit pairing to line up evenly */
+/* Nutrition rows (Step 4): even spacing between columns */
 .recipe-panel .form-row {
   display: flex;
   flex-wrap: wrap;
@@ -167,11 +162,6 @@ textarea.form-control { height: auto; }
 .recipe-panel .form-row > .form-group {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
-  box-sizing: border-box;
-}
-.recipe-panel .input-group,
-.recipe-panel .input-group > .form-control {
-  width: 100%;
   box-sizing: border-box;
 }
 /* ==== END OF COSMETIC FIXES ==== */
