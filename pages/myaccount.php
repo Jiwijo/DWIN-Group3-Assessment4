@@ -33,6 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $accountError = 'Enter a username of up to 80 characters.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $accountError = 'Enter a valid email address.';
+    } elseif (strlen($fullName) > 120) {
+      $accountError = 'Enter a name of up to 120 characters.';
+    } elseif (strlen($location) > 120) {
+      $accountError = 'Enter a location of up to 120 characters.';
     } elseif (isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] !== UPLOAD_ERR_NO_FILE) {
       $upload = $_FILES['profile_photo'];
       if ($upload['error'] !== UPLOAD_ERR_OK || $upload['size'] > 4 * 1024 * 1024) {
