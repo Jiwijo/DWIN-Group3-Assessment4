@@ -65,8 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($accountError === '') {
       try {
-        $update = $pdo->prepare('UPDATE users SET username = ?, email = ?, profile_photo = ? WHERE user_id = ?');
-        $update->execute([$username, $email, $profilePhoto, $accountUser['id']]);
+        $update = $pdo->prepare('UPDATE users SET username = ?, email = ?, full_name = ?, location = ?, profile_photo = ? WHERE user_id = ?');
+        $update->execute([$username, $email, $fullName, $location, $profilePhoto, $accountUser['id']]);
         $_SESSION['user']['username'] = $username;
         $_SESSION['user']['email'] = $email;
         if ($newPhotoPath && $accountDetails['profile_photo'] && str_starts_with($accountDetails['profile_photo'], 'profiles/')) {
